@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.9-nodejs14-alpine
+FROM node:12-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -15,5 +15,4 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
 CMD [ "npm", "run", "fetch" ]

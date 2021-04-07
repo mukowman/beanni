@@ -1,16 +1,19 @@
-# Install the app dependencies in a full Node docker image
-FROM node:14-alpine
-  
-WORKDIR "/app"
+FROM node:14
 
-# Copy package.json and package-lock.json
-COPY * ./
+# Create app directory
+WORKDIR /usr/src/app
 
 # Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
 RUN npm install
-RUN npm run build
-RUN npm run init
+# If you are building your code for production
+# RUN npm ci --only=production
 
-USER node
+# Bundle app source
+COPY . .
 
-CMD ["npm", "run", "fetch"]
+EXPOSE 8080
+CMD [ "npm", "run", "fetch" ]
